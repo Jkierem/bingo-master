@@ -1,3 +1,4 @@
+$cell-dim: 40px;
 $primary:  #4baa9b;
 $primary-dark: #358377;
 
@@ -8,8 +9,23 @@ $primary-dark: #358377;
     display: flex;
     flex-direction: row;
 
+    .latir {
+        max-height: $cell-dim * 3;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+
+        &__logo {
+            max-height: $cell-dim * 3;
+            margin: 0 auto;
+        }
+    }
+
     &__controls {
         margin: 16px;
+        width: 300px;
+        position: relative;
 
         &__button {
             margin: 0px 8px;

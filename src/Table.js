@@ -2,7 +2,6 @@ import React from 'react'
 import { range } from 'ramda';
 import getClassName from 'getclassname'
 import "./Table.scss"
-import logo from './latir.jpeg'
 
 const Table = (props) => {
     const { values }= props;
@@ -27,9 +26,6 @@ const Table = (props) => {
                     {value}
                 </div>
             })}
-        </div>
-        <div className="table__logo">
-            <img src={logo} className="latir" alt="logo"/>
         </div>
     </div>)
 }

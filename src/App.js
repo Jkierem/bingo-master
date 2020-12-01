@@ -1,15 +1,17 @@
-import { Either } from 'jazzi'
+import { useLayoutEffect, useState } from 'react'
 import { complement, equals, reverse, tail, take, compose } from 'ramda'
-import { useState } from 'react'
+import { Either } from 'jazzi'
+import getClassName from 'getclassname'
 import { mkGen } from './core'
 import Table from './Table'
+import useDevice from './hooks/useDevice'
+import logo from './latir.jpeg'
 import "./App.scss"
-import getClassName from 'getclassname'
 
 const gen = mkGen()
 const neq = complement(equals)
 
-const history = compose( take(15), tail, reverse )
+const history = (x=15) => compose( take(x), tail, reverse )
 
 const toBingoBallot = x => {
   return Either
@@ -34,11 +36,22 @@ const toBingoBallot = x => {
 
 function App() {
   const [latest, setLatest] = useState(undefined)
+  const [hist, setHist] = useState(15)
+  const device = useDevice()
   const handleNext = () => setLatest(gen.generate())
   const handleReset = () => {
     gen.reset()
     setLatest(undefined)
   }
+
+
+  useLayoutEffect(() => {
+    if( device.isMobile() ){
+      setHist(8)
+    } else {
+      setHist(15)
+    }
+  },[device])
 
   const root = getClassName({ base: "container" })
   const controls = root.extend("&__controls");
@@ -53,8 +66,11 @@ function App() {
         <h1>Actual: {toBingoBallot(latest)}</h1>
         <h1>Historial (Total: {gen.peak().length})</h1>
         <ul>
-          {history(gen.peak()).map(x => <li key={x}>{toBingoBallot(x)}</li>)}
+          {history(hist)(gen.peak()).map(x => <li key={x}>{toBingoBallot(x)}</li>)}
         </ul>
+        <div className="latir">
+          <img src={logo} className="latir__logo" alt="logo"/>
+        </div>
       </div>
     </div>
   );
