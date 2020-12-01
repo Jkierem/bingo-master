@@ -19,6 +19,17 @@ $primary-dark: #358377;
     border-radius: 8px;
     margin: 16px;
     width: $cell-dim * 5;
+    &__logo {
+        @extend %centered;
+        height: $cell-dim * 3;
+        width: $cell-dim * 5;
+        background-color: transparent;
+
+        .latir {
+            max-height: $cell-dim * 2;
+        }
+    }
+
     &__heading {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
