@@ -1,26 +1,31 @@
-import { Either, Maybe } from 'jazzi'
-import { complement, equals } from 'ramda'
+import { Either } from 'jazzi'
+import { complement, equals, reverse, tail, take, compose } from 'ramda'
 import { useState } from 'react'
 import { mkGen } from './core'
+import Table from './Table'
+import "./App.scss"
+import getClassName from 'getclassname'
 
 const gen = mkGen()
 const neq = complement(equals)
 
-const getLatestMessage = x => {
+const history = compose( take(15), tail, reverse )
+
+const toBingoBallot = x => {
   return Either
   .fromPredicate(neq(undefined),x)
   .flatMap(x => Either.fromPredicate(neq(-1),x))
   .map(x => {
     if( x <= 15 ){
-      return "B"
+      return "L"
     } else if( x <= 30) {
-      return "I"
+      return "A"
     } else if( x <= 45) {
-      return "N"
+      return "T"
     } else if( x <= 60) {
-      return "G"
+      return "I"
     } else {
-      return "O"
+      return "R"
     }
   })
   .map(l => `${l}${x}`)
@@ -35,20 +40,21 @@ function App() {
     setLatest(undefined)
   }
 
+  const root = getClassName({ base: "container" })
+  const controls = root.extend("&__controls");
+  const buttonClass = controls.extend("&__button")
+
   return (
-    <div>
-      <div>Table goes here</div>
-      <div>
-        Controls go here
-        <div>
-          <button onClick={handleNext}>Siguiente</button>
-          <button onClick={handleReset}>Reset</button>
-          <h1>Latest: {getLatestMessage(latest)}</h1>
-          <h1>Historial</h1>
-          <ol>
-            {gen.peak().map(x => <li key={x}>{x}</li>)}
-          </ol>
-        </div>
+    <div className={root}>
+      <Table values={gen.peak()}/>
+      <div className={controls}>
+        <button className={buttonClass} onClick={handleNext}>Siguiente</button>
+        <button className={buttonClass} onClick={handleReset}>Reset</button>
+        <h1>Actual: {toBingoBallot(latest)}</h1>
+        <h1>Historial (Total: {gen.peak().length})</h1>
+        <ul>
+          {history(gen.peak()).map(x => <li key={x}>{toBingoBallot(x)}</li>)}
+        </ul>
       </div>
     </div>
   );

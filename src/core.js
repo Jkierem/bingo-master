@@ -10,7 +10,7 @@ const LIMIT = 75;
 
 export const mkGen = () => {
     let mem = []
-    const find = y => Maybe.of(mem.find(x => x == y))
+    const find = y => Maybe.of(mem.find(x => x === y))
     const generate = () => {
         return Maybe
         .of(mem.length < LIMIT)
