@@ -15,14 +15,14 @@ const Table = (props) => {
     <div className="table">
         <div className="table__heading">
             {"LATIR".split("").map(value => {
-                return <div className="table__heading__cell">
+                return <div key={value} className="table__heading__cell">
                     {value}
                 </div>
             })}
         </div>
         <div className="table__body">
             {range(1,76).map(value => {
-                return <div className={getCellClass(value)}>
+                return <div key={value} className={getCellClass(value)}>
                     {value}
                 </div>
             })}
