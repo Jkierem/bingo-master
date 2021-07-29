@@ -14,7 +14,7 @@ const Bingo = (props) => {
     return (
     <div className="bingo_table">
         <div className="bingo_table__heading">
-            {"LATIR".split("").map((value) => {
+            {"BINGO".split("").map((value) => {
                 return <div key={value} className="bingo_table__heading__cell">
                     {value}
                 </div>

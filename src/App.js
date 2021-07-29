@@ -6,7 +6,6 @@ import { database, auth } from './firebase'
 import { mkGen } from './core'
 import Table from './Table'
 import useDevice from './hooks/useDevice'
-import logo from './latir.jpeg'
 import Button from './Button'
 import Bingo from './Bingo'
 import "./App.scss"
@@ -22,15 +21,15 @@ const toBingoBallot = x => {
   .flatMap(x => Either.fromPredicate(neq(-1),x))
   .map(x => {
     if( x <= 15 ){
-      return "L"
+      return "B"
     } else if( x <= 30) {
-      return "A"
-    } else if( x <= 45) {
-      return "T"
-    } else if( x <= 60) {
       return "I"
+    } else if( x <= 45) {
+      return "N"
+    } else if( x <= 60) {
+      return "G"
     } else {
-      return "R"
+      return "O"
     }
   })
   .map(l => `${l}${x}`)
@@ -92,26 +91,23 @@ function App() {
     <div className={root}>
       <Table values={pastBallots}/>
       <div className={controls}>
-        <button className={buttonClass} onClick={handleNext}>Siguiente</button>
+        <button className={buttonClass} onClick={handleNext}>Next</button>
         <button className={buttonClass} onClick={handleReset}>Reset</button>
-        <h1>Actual: {toBingoBallot(latest)}</h1>
-        <h1>Historial (Total: {pastBallots.length})</h1>
+        <h1>Current: {toBingoBallot(latest)}</h1>
+        <h1>History (Total: {pastBallots.length})</h1>
         <ul>
           {history(hist)(pastBallots).map(x => <li key={x}>{toBingoBallot(x)}</li>)}
         </ul>
-        <div className="latir">
-          <img src={logo} className="latir__logo" alt="logo"/>
-        </div>
       </div>
       <div className={verifyContainer}>
         <input 
           id="code" 
-          placeholder="Codigo de bingo..." 
+          placeholder="Bingo identifier..." 
           value={value} 
           onChange={handleChange}
           className={verifyInput}
         />
-        <Button loading={loading} onClick={handleSubmit}>Mostrar</Button>
+        <Button loading={loading} onClick={handleSubmit}>Show</Button>
         {bingo && <Bingo bingo={bingo} selected={bingoData}/>}
       </div>
     </div>
