@@ -91,10 +91,10 @@ function App() {
     <div className={root}>
       <Table values={pastBallots}/>
       <div className={controls}>
-        <button className={buttonClass} onClick={handleNext}>Next</button>
+        <button className={buttonClass} onClick={handleNext}>Siguiente</button>
         <button className={buttonClass} onClick={handleReset}>Reset</button>
-        <h1>Current: {toBingoBallot(latest)}</h1>
-        <h1>History (Total: {pastBallots.length})</h1>
+        <h1>Actual: {toBingoBallot(latest)}</h1>
+        <h1>Historial (Total: {pastBallots.length})</h1>
         <ul>
           {history(hist)(pastBallots).map(x => <li key={x}>{toBingoBallot(x)}</li>)}
         </ul>
@@ -107,7 +107,7 @@ function App() {
           onChange={handleChange}
           className={verifyInput}
         />
-        <Button loading={loading} onClick={handleSubmit}>Show</Button>
+        <Button loading={loading} onClick={handleSubmit}>Buscar</Button>
         {bingo && <Bingo bingo={bingo} selected={bingoData}/>}
       </div>
     </div>

@@ -1,8 +1,8 @@
-import firebase from "firebase/app"
-import "firebase/database"
-import "firebase/auth"
+import firebase from "firebase/compat/app"
+import 'firebase/compat/auth';
+import 'firebase/compat/database';
 
-const getEnv = (str) => process.env[`REACT_APP_${str}`]
+const getEnv = (str) => import.meta.env[`VITE_${str}`]
 
 const firebaseConfig = {
   apiKey: getEnv("API_KEY"),
@@ -14,7 +14,7 @@ const firebaseConfig = {
   appId: getEnv("APP_ID"),
 }
 
-// firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(firebaseConfig)
 
-export const auth = {}//firebase.auth()
-export const database = {}//firebase.database()
+export const auth = firebase.auth()
+export const database = firebase.database()
