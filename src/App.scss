@@ -1,6 +1,6 @@
 $cell-dim: 40px;
-$primary:  #de411b;
-$primary-dark: #9b3218;
+$primary:  #00afca;
+$primary-dark: #00515f;
 
 .container {
     @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
@@ -9,7 +9,7 @@ $primary-dark: #9b3218;
     display: flex;
     flex-direction: row;
 
-    .latir {
+    .auna {
         max-height: $cell-dim * 3;
         position: absolute;
         bottom: 0;

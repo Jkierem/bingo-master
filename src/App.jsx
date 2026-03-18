@@ -8,6 +8,7 @@ import Table from './Table'
 import useDevice from './hooks/useDevice'
 import Button from './Button'
 import Bingo from './Bingo'
+import logo from "./logo.png"
 import "./App.scss"
 
 const gen = mkGen()
@@ -71,6 +72,10 @@ function App() {
       })
   }
 
+  const handleClean = () => {
+    setBingo()
+  }
+
 
   useLayoutEffect(() => {
     device.match({
@@ -98,6 +103,9 @@ function App() {
         <ul>
           {history(hist)(pastBallots).map(x => <li key={x}>{toBingoBallot(x)}</li>)}
         </ul>
+        <div className="auna">
+          <img src={logo} className="auna__logo" alt="logo"/>
+        </div>
       </div>
       <div className={verifyContainer}>
         <input 
@@ -108,6 +116,7 @@ function App() {
           className={verifyInput}
         />
         <Button loading={loading} onClick={handleSubmit}>Buscar</Button>
+        <Button onClick={handleClean}>Limpiar</Button>
         {bingo && <Bingo bingo={bingo} selected={bingoData}/>}
       </div>
     </div>
