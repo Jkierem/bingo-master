@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useMemo, useState } from 'react'
 import { complement, equals, reverse, tail, take, compose, path } from 'ramda'
 import { Either, Maybe } from 'jazzi'
 import getClassName from 'getclassname'
@@ -7,9 +7,10 @@ import { mkGen } from './core'
 import Table from './Table'
 import useDevice from './hooks/useDevice'
 import Button from './Button'
-import Bingo from './Bingo'
+import Bingo, { BingoGuide } from './Bingo'
 import logo from "./logo.png"
 import "./App.scss"
+import { AllGuides, getGuide, getGuideLabel, Guides } from './Guides'
 
 const gen = mkGen()
 const neq = complement(equals)
@@ -72,10 +73,15 @@ function App() {
       })
   }
 
-  const handleClean = () => {
-    setBingo()
+  const handleClean = () => setBingo()
+  
+  const [guide, setGuide] = useState(Guides.None);
+  
+  const handleChangeGuide = (e) => {
+    setGuide(Guides.toEnum(e.target.value))
   }
 
+  const maybeGuide = useMemo(() => getGuide(guide), [guide]);
 
   useLayoutEffect(() => {
     device.match({
@@ -89,6 +95,8 @@ function App() {
   const buttonClass = controls.extend("&__button")
   const verifyContainer = root.extend("&__verification")
   const verifyInput = verifyContainer.extend("&__input")
+  const guideContainer = root.extend("&__guide")
+  const guideSelect = guideContainer.extend("&__select")
 
   const pastBallots = gen.peak();
   const bingoData = pastBallots.reduce((acc,next) => ({...acc, [next]: true }),{})
@@ -107,10 +115,29 @@ function App() {
           <img src={logo} className="auna__logo" alt="logo"/>
         </div>
       </div>
+      <div className={guideContainer}>
+        <select 
+          id="guide"
+          className={guideSelect}
+          value={Guides.fromEnum(guide)}
+          onChange={handleChangeGuide}
+        >
+          {AllGuides.map((guide) => {
+            return <option 
+              value={Guides.fromEnum(guide)} 
+              key={getGuideLabel(guide)}
+            >{getGuideLabel(guide)}</option>
+          })}
+        </select>
+        {maybeGuide.match({
+          Just: guide => <BingoGuide guide={guide} />,
+          None: () => <></>
+        })}
+      </div>
       <div className={verifyContainer}>
         <input 
           id="code" 
-          placeholder="Bingo identifier..." 
+          placeholder="Identificador de bingo..." 
           value={value} 
           onChange={handleChange}
           className={verifyInput}

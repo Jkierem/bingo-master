@@ -64,4 +64,23 @@ $primary-dark: #00515f;
             }
         }
     }
+
+    &__guide {
+        margin: 16px 0;
+        min-width: 233px;
+        &__select {
+            margin: 0;
+            margin-top: 1.5px;
+            border-radius: 8px;
+            border: 1px solid gray;
+            padding: 12px 14px;
+            background-color: white;
+            min-height: 45px;
+            
+            &:focus {
+                outline: none;
+                border-color: $primary;
+            }
+        }
+    }
 }

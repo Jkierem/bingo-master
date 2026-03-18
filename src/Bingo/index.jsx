@@ -31,3 +31,31 @@ const Bingo = (props) => {
 }
 
 export default Bingo
+
+export const BingoGuide = (props) => {
+    const { guide } = props
+
+    const getCellClass = x => getClassName({
+        base: "bingo_table__body__cell",
+        "&--on": x,
+    })
+
+    return (
+    <div className="bingo_table">
+        <div className="bingo_table__heading">
+            {"BINGO".split("").map((value) => {
+                return <div key={value} className="bingo_table__heading__cell">
+                    {value}
+                </div>
+            })}
+        </div>
+        <div className="bingo_table__body">
+            { range(0,5).flatMap(
+                x => range(0,5).map(
+                y => <div key={`${x}-${y}-guide`} className={getCellClass(guide[y][x])} >
+                    {` `}
+                </div>
+            ))}
+        </div>
+    </div>)
+}

@@ -20,6 +20,7 @@ $primary-dark: #bdd600;
     border-radius: 8px;
     margin: 16px;
     width: $cell-dim * 5;
+    margin-left: 0;
 
     &__heading {
         display: grid;
